@@ -1,37 +1,39 @@
-export const baseUrl = "https://menuapp.flipcodesolutions.com/"
+export const baseUrl = "https://menuapp.flipcodesolutions.com/";
 // export const baseUrl = "http://127.0.0.1:8000/"
 
 // view api
-export const login = baseUrl + "api/login"
-export const categoryList = baseUrl + "api/categories"
-export const categoryImage = baseUrl + "categoryPhoto/"
+export const login = baseUrl + "api/login";
+export const categoryList = baseUrl + "api/categories";
+export const categoryImage = baseUrl + "categoryPhoto/";
 export const getTableList = baseUrl + "api/table";
 export const getStaffList = baseUrl + "api/staff";
 export const getMenuList = baseUrl + "api/menu";
-
+export const getSingleStaffData = baseUrl + "api/staff/byId";
 
 //delete api
-export const deleteTables = baseUrl + "api/table/"
-export const deleteCategories = baseUrl + "api/category/"
-export const deleteMemebers = baseUrl + "api/staff/"
+export const deleteTables = baseUrl + "api/table/";
+export const deleteCategories = baseUrl + "api/category/";
+export const deleteMemebers = baseUrl + "api/staff/";
 
 // add api
 
-export const addCategory = baseUrl + "api/categories"
-export const addTable = baseUrl + "api/table"
-export const addStff = baseUrl + "api/staff"
+export const addCategory = baseUrl + "api/categories";
+export const addTable = baseUrl + "api/table";
+export const addStff = baseUrl + "api/staff";
 
+//edit api
+export const updateStaffApi = baseUrl + "api/staff";
 
 //trash list api
-export const trashCategories = baseUrl + "api/trashCategories"
-export const trashStaff = baseUrl + "api/trashStaff"
-export const trashTable = baseUrl + "api/trashTable"
+export const trashCategories = baseUrl + "api/trashCategories";
+export const trashStaff = baseUrl + "api/trashStaff";
+export const trashTable = baseUrl + "api/trashTable";
 
+//restore api
 
-//restore api 
+export const restoreCategories = baseUrl + "api/category/restore/";
+export const restoreTable = baseUrl + "api/table/restore/";
+export const restoreStaff = baseUrl + "api/staff/restore/";
 
-export const restoreCategories = baseUrl + "api/category/restore/"
-export const restoreTable = baseUrl + "api/table/restore/"
-export const restoreStaff = baseUrl + "api/staff/restore/"
 // harddelete
-export const hardDeleteCategories = baseUrl + "api/category/delete/"
+export const hardDeleteCategories = baseUrl + "api/category/delete/";
