@@ -8,6 +8,7 @@ export const categoryImage = baseUrl + "categoryPhoto/";
 export const getTableList = baseUrl + "api/table";
 export const getStaffList = baseUrl + "api/staff";
 export const getMenuList = baseUrl + "api/menu";
+export const getSingleCategory = baseUrl + "api/category/byId";
 export const getSingleStaffData = baseUrl + "api/staff/byId";
 
 //delete api
@@ -23,6 +24,7 @@ export const addStff = baseUrl + "api/staff";
 
 //edit api
 export const updateStaffApi = baseUrl + "api/staff";
+export const updateCategory = baseUrl + "api/category";
 
 //trash list api
 export const trashCategories = baseUrl + "api/trashCategories";

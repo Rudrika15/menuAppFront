@@ -13,8 +13,12 @@ const RestaurantTopbar = () => {
   const name = localStorage.getItem("name");
 
   const handleToggle = () => {
-    setIsToggled(!isToggled); // Toggle the state
-    console.log(isToggled ? "prahalad" : "mankoliya");
+    setIsToggled(!isToggled);
+    if (!isToggled) {
+      document.body.classList.add("toggle-sidebar");
+    } else {
+      document.body.classList.remove("toggle-sidebar");
+    }
   };
 
   return (
