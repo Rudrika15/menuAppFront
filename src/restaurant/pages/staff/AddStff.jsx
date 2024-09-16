@@ -34,7 +34,7 @@ const AddStff = () => {
       });
       if (response.data) {
         if (response.data.status == true) {
-          const staff = response.data.data[0];
+          const staff = response?.data?.data[0];
           setName(staff.name);
           setEmail(staff.email);
           setContactNumber(staff.contactNumber);
@@ -75,14 +75,6 @@ const AddStff = () => {
       toast.error("Staff type is required");
       return;
     }
-
-    // const data = {
-    //   name,
-    //   email,
-    //   password,
-    //   contactNumber,
-    //   staffType,
-    // };
 
     const data = {
       name,

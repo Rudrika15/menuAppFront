@@ -16,6 +16,7 @@ export const getSingleStaffData = baseUrl + "api/staff/byId";
 export const deleteTables = baseUrl + "api/table/";
 export const deleteCategories = baseUrl + "api/category/";
 export const deleteMemebers = baseUrl + "api/staff/";
+export const deleteMenuList = baseUrl + "api/menu";
 
 // add api
 

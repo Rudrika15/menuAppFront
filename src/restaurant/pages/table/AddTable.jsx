@@ -26,8 +26,8 @@ const AddTable = () => {
           });
           console.log(response.data.data, "response of data");
           if (response.data.status === true) {
-            setTableNumber(response.data.data.tableNumber);
-            setCapacity(response.data.data.capacity);
+            setTableNumber(response?.data?.data?.tableNumber);
+            setCapacity(response?.data?.data?.capacity);
             setLoader(false);
           } else {
             toast.error(response.data.message);

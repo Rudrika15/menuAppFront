@@ -16,7 +16,7 @@ export const AddCategory = () => {
   const [title, setTitle] = useState("");
   const [photo, setPhoto] = useState("");
   const [loader, setLoader] = useState(false);
-  const [previewImage, setPreviewImage] = useState(""); // State to store the preview image
+  const [previewImage, setPreviewImage] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
 
