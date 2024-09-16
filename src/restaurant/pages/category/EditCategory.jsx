@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import RestaurantSidebar from "../../component/RestaurantSidebar";
 import RestaurantBreadcrumbs from "../../component/RestaurantBreadcrumbs";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import {
   updateCategory,
   getSingleCategory,
@@ -16,6 +17,7 @@ const EditCategory = () => {
   const [loader, setLoader] = useState(true);
 
   const { categoryId } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCategoryData = async () => {
@@ -32,6 +34,7 @@ const EditCategory = () => {
         }
       } catch (error) {
         console.error("Error fetching data:", error);
+        toast.error(error.message);
       }
     };
     fetchCategoryData();
@@ -63,10 +66,14 @@ const EditCategory = () => {
           headers: { token: localStorage.getItem("token") },
         }
       );
-
-      console.log(response.data, "response of edit category");
+      if (response.data.status == true) {
+        toast.success(response.data.message);
+        navigate("/view-category");
+      } else {
+        toast.error(response.data.message);
+      }
     } catch (error) {
-      console.error("Error:", error);
+      toast.error(error.message);
     }
   };
 

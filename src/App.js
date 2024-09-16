@@ -80,6 +80,11 @@ function App() {
           element={<PrivateRoute element={<ViewTable />} />}
         />
         <Route
+          path="/edit-table/:tableId"
+          element={<PrivateRoute element={<AddTable />} />}
+        />
+
+        <Route
           path="/Trash-table"
           element={<PrivateRoute element={<TrashTable />} />}
         />

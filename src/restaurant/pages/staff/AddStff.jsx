@@ -13,7 +13,7 @@ const AddStff = () => {
   const [contactNumber, setContactNumber] = useState("");
   const [staffType, setStaffType] = useState("");
   const [isEditMode, setIsEditMode] = useState(false);
-  const [loader, setLoader] = useState(true);
+  const [loader, setLoader] = useState(false);
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -27,10 +27,11 @@ const AddStff = () => {
 
   const fetchStaffDetails = async (staffId) => {
     try {
+      setLoader(true);
+
       const response = await axios.get(`${getSingleStaffData}/${staffId}`, {
         headers: { token: localStorage.getItem("token") },
       });
-
       if (response.data) {
         if (response.data.status == true) {
           const staff = response.data.data[0];
@@ -42,6 +43,7 @@ const AddStff = () => {
         }
       }
     } catch (error) {
+      setLoader(false);
       toast.error("Failed to fetch staff details!");
     }
   };
