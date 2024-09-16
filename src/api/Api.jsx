@@ -26,7 +26,7 @@ export const addStff = baseUrl + "api/staff";
 //edit api
 export const updateStaffApi = baseUrl + "api/staff";
 export const updateCategory = baseUrl + "api/category";
-export const updateTable = baseUrl + "api/table";
+export const updateTable = baseUrl + "api/table/edit";
 
 //trash list api
 export const trashCategories = baseUrl + "api/trashCategories";

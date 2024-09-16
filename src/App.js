@@ -36,17 +36,17 @@ function App() {
         {/* Public Route */}
         <Route path="/" element={<Login />} />
         {/* Protected Routes */}
+
+        {/* staff routes */}
+
         <Route
           path="/add-new-staff"
           element={<PrivateRoute element={<AddStaff />} />}
         />
-
-        {/* edit route */}
         <Route
           path="/staff/:id"
           element={<PrivateRoute element={<AddStaff />} />}
         />
-        {/* Reusing AddStaff component */}
         <Route
           path="/view-staff"
           element={<PrivateRoute element={<ViewStaff />} />}
@@ -55,6 +55,9 @@ function App() {
           path="/trash-staff"
           element={<PrivateRoute element={<TrashStaff />} />}
         />
+
+        {/* categories */}
+
         <Route
           path="/add-new-category"
           element={<PrivateRoute element={<AddCategory />} />}
@@ -64,13 +67,17 @@ function App() {
           element={<PrivateRoute element={<ViewCategory />} />}
         />
         <Route
-          path="/edit-category/:categoryId"
-          element={<PrivateRoute element={<EditCategory />} />}
+          path="/edit-category/:id"
+          element={<PrivateRoute element={<AddCategory />} />}
         />
+
         <Route
           path="/trash-category"
           element={<PrivateRoute element={<TrashCategory />} />}
         />
+
+        {/* table routes */}
+
         <Route
           path="/add-new-table"
           element={<PrivateRoute element={<AddTable />} />}

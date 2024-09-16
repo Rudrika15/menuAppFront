@@ -55,7 +55,7 @@ const ViewCategory = () => {
 
       if (response.data) {
         if (response.data.status === true) {
-          setCategoryData(response.data.data);
+          setCategoryData(response?.data?.data);
           setLoader(false);
         } else {
           toast.error(response.data.message);
