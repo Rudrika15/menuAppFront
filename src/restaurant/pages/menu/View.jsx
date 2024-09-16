@@ -5,6 +5,7 @@ import axios from "axios";
 import { getMenuList, categoryImage, deleteMenuList } from "../../../api/Api";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 const View = () => {
   const [menu, setMenu] = useState([]);
@@ -36,6 +37,7 @@ const View = () => {
   };
 
   const handleDelete = async (id) => {
+    console.log(id, "for test");
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -46,8 +48,10 @@ const View = () => {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
+        console.log(result, "result for test");
+
         try {
-          const response = await axios.delete(`${deleteMenuList}${id}`, {
+          const response = await axios.delete(`${deleteMenuList}/${id}`, {
             headers: {
               token: localStorage.getItem("token"),
             },
@@ -75,9 +79,9 @@ const View = () => {
       <RestaurantSidebar />
       <main id="main" className="main">
         <RestaurantBreadcrumbs
-          title="View Category"
-          link="/add-new-category"
-          linkTitle="Add New Category"
+          title="View Menu"
+          link="/add-menu"
+          linkTitle="Add Menu"
         />
         <section className="section">
           <div className="row">
@@ -119,10 +123,12 @@ const View = () => {
                             />
                           </td>
                           <td>
-                            <i className="btn btn-primary bi bi-pencil text-white fs-5 p-2 me-2"></i>
+                            <Link to={`/edit-menu/${item.id}`}>
+                              <i className="btn btn-primary bi bi-pencil text-white fs-5 p-2 me-2"></i>
+                            </Link>
                             <i
                               className="btn btn-danger bi bi-trash text-white fs-5 p-2 me-2"
-                              onClick={() => handleDelete(`${item.id}`)}
+                              onClick={() => handleDelete(item.id)}
                             ></i>
                           </td>
                         </tr>

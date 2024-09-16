@@ -11,12 +11,13 @@ export const getStaffList = baseUrl + "api/staff";
 export const getMenuList = baseUrl + "api/menu";
 export const getSingleCategory = baseUrl + "api/category/byId";
 export const getSingleStaffData = baseUrl + "api/staff/byId";
+export const getSingleMenuData = baseUrl + "api/menu/byId";
 
 //delete api
 export const deleteTables = baseUrl + "api/table/";
 export const deleteCategories = baseUrl + "api/category/";
 export const deleteMemebers = baseUrl + "api/staff/";
-export const deleteMenuList = baseUrl + "api/menu";
+export const deleteMenuList = baseUrl + "api/menu/delete";
 
 // add api
 

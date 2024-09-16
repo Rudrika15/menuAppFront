@@ -52,7 +52,7 @@ const ViewStaff = () => {
             toast.error(response.data.message);
           }
         } catch (error) {
-          toast.error("API call failed!");
+          toast.error(error.message);
         }
       }
     });
