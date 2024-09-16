@@ -5,19 +5,20 @@ import { useNavigate } from "react-router-dom";
 const RestaurantTopbar = () => {
   const navigate = useNavigate();
   const [isToggled, setIsToggled] = useState(false);
-
   const logout = () => {
     localStorage.removeItem("token");
     navigate("/"); // Correctly navigate to the home page or login page after logout
   };
+
   const name = localStorage.getItem("name");
 
   const handleToggle = () => {
     setIsToggled(!isToggled);
-    if (!isToggled) {
-      document.body.classList.add("toggle-sidebar");
+    const body = document.body;
+    if (isToggled) {
+      body.classList.remove("toggle-sidebar");
     } else {
-      document.body.classList.remove("toggle-sidebar");
+      body.classList.add("toggle-sidebar");
     }
   };
 

@@ -19,6 +19,7 @@ import TrashCategory from "./restaurant/pages/category/TrashCategory";
 import TrashStaff from "./restaurant/pages/staff/TrashStaff";
 import TrashTable from "./restaurant/pages/table/TrashTable";
 import View from "./restaurant/pages/menu/View";
+import { useEffect } from "react";
 
 function App() {
   const isAuthenticated = () => {
@@ -28,6 +29,9 @@ function App() {
   const PrivateRoute = ({ element: Component, ...rest }) => {
     return isAuthenticated() ? Component : <Navigate to="/" />;
   };
+  useEffect(() => {
+    document.body.classList.remove("toggle-sidebar");
+  }, []);
 
   return (
     <Router>
