@@ -15,9 +15,8 @@ export const AddCategory = () => {
   const { id } = useParams();
   const [title, setTitle] = useState("");
   const [photo, setPhoto] = useState("");
-  const [loader, setLoader] = useState(true);
+  const [loader, setLoader] = useState(false);
   const [previewImage, setPreviewImage] = useState(""); // State to store the preview image
-
   const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
 
@@ -31,8 +30,8 @@ export const AddCategory = () => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setPhoto(file); // Store the file in the state
-      setPreviewImage(URL.createObjectURL(file)); // Generate and set the preview URL
+      setPhoto(file);
+      setPreviewImage(URL.createObjectURL(file));
     }
   };
 
@@ -42,9 +41,9 @@ export const AddCategory = () => {
         headers: { token: localStorage.getItem("token") },
       });
       if (response.data) {
-        if (response.data.status == true) {
-          setTitle(response.data.data[0].title);
-          setPhoto(response.data.data[0].photo);
+        if (response.data.status === true) {
+          setTitle(response?.data?.data[0]?.title);
+          setPhoto(response?.data?.data[0]?.photo);
           setLoader(false);
         }
       }
@@ -53,38 +52,6 @@ export const AddCategory = () => {
       toast.error(error.message);
     }
   };
-
-  // const handleFormSubmit = async (e) => {
-  //   e.preventDefault();
-  //   // if (!title ) {
-  //   //   toast.error('Please fill title fd');
-  //   //  return
-  //   // }
-  //   // if (!photo) {
-  //   //   toast.error('Please select photo fd');
-  //   //  return
-  //   // }
-
-  //   const formData = new FormData();
-  //   formData.append("title", title);
-  //   formData.append("photo", photo);
-
-  //   try {
-  //     const response = await axios.post(addCategory, formData, {
-  //       headers: {
-  //         "Content-Type": "multipart/form-data",
-  //         token: localStorage.getItem("token"),
-  //       },
-  //     });
-  //     if (response.data.status === true) {
-  //       toast.success("category added successfully!");
-  //     } else {
-  //       toast.error(response.data.message);
-  //     }
-  //   } catch (error) {
-  //     toast.error(error.response.data.message);
-  //   }
-  // };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -98,7 +65,7 @@ export const AddCategory = () => {
     if (typeof photo === "object") {
       formData.append("photo", photo);
     }
-
+    setLoader(true);
     try {
       let response;
       if (isEditing) {
@@ -129,6 +96,8 @@ export const AddCategory = () => {
       }
     } catch (error) {
       toast.error(error.response?.data?.message || "Error occurred");
+    } finally {
+      setLoader(false);
     }
   };
 
@@ -141,59 +110,67 @@ export const AddCategory = () => {
           link="/view-category"
           linkTitle="Back"
         />
-        <section className="section">
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="card">
-                <div className="card-body pt-5">
-                  <form className="row g-3" onSubmit={handleFormSubmit}>
-                    <div className="col-md-12">
-                      <div className="form-floating">
+        {loader ? (
+          <div className="d-flex justify-content-center">
+            <div className="spinner-border text-primary" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        ) : (
+          <section className="section">
+            <div className="row">
+              <div className="col-lg-12">
+                <div className="card">
+                  <div className="card-body pt-5">
+                    <form className="row g-3" onSubmit={handleFormSubmit}>
+                      <div className="col-md-12">
+                        <div className="form-floating">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="floatingName"
+                            placeholder="Your category"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                          />
+                          <label htmlFor="floatingName">Category</label>
+                        </div>
+                      </div>
+                      <div className="col-md-12">
+                        <div className="form-floating">
+                          <input
+                            type="file"
+                            className="form-control"
+                            id="floatingPhoto"
+                            placeholder="Your photo"
+                            onChange={handleFileChange}
+                          />
+                          <label htmlFor="floatingPhoto">Photo</label>
+                        </div>
+                      </div>
+                      {(previewImage || (isEditing && photo)) && (
+                        <div className="mt-3">
+                          <img
+                            src={previewImage || `${categoryImage}/${photo}`}
+                            alt="Category Preview"
+                            style={{ width: "150px", height: "150px" }}
+                          />
+                        </div>
+                      )}
+                      <div className="">
                         <input
-                          type="text"
-                          className="form-control"
-                          id="floatingName"
-                          placeholder="Your category"
-                          value={title}
-                          onChange={(e) => setTitle(e.target.value)}
-                        />
-                        <label htmlFor="floatingName">Category</label>
-                      </div>
-                    </div>
-                    <div className="col-md-12">
-                      <div className="form-floating">
-                        <input
-                          type="file"
-                          className="form-control"
-                          id="floatingPhoto"
-                          placeholder="Your photo"
-                          onChange={handleFileChange}
-                        />
-                        <label htmlFor="floatingPhoto">Photo</label>
-                      </div>
-                    </div>
-                    {(previewImage || (isEditing && photo)) && (
-                      <div className="mt-3">
-                        <img
-                          src={previewImage || `${categoryImage}/${photo}`}
-                          alt="Category Preview"
-                          style={{ width: "150px", height: "150px" }}
+                          type="submit"
+                          className="btn btn-primary"
+                          value={isEditing ? "Update Category" : "Add Category"}
                         />
                       </div>
-                    )}
-                    <div className="">
-                      <input
-                        type="submit"
-                        className="btn btn-primary"
-                        value={isEditing ? "Update Category" : "Add Category"}
-                      />
-                    </div>
-                  </form>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
       </main>
     </>
   );
