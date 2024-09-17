@@ -26,7 +26,6 @@ const View = () => {
       }
 
       const response = await axios.get(url, config);
-      console.log(response.data, "response of menu");
 
       if (response.data.status === true) {
         setMenu(response.data.data);
@@ -48,8 +47,6 @@ const View = () => {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        console.log(result, "result for test");
-
         try {
           const response = await axios.delete(`${deleteMenuList}/${id}`, {
             headers: {

@@ -24,11 +24,13 @@ export const deleteMenuList = baseUrl + "api/menu/delete";
 export const addCategory = baseUrl + "api/categories";
 export const addTable = baseUrl + "api/table";
 export const addStff = baseUrl + "api/staff";
+export const addMenu = baseUrl + "api/menu";
 
 //edit api
 export const updateStaffApi = baseUrl + "api/staff";
 export const updateCategory = baseUrl + "api/category";
 export const updateTable = baseUrl + "api/table/edit";
+export const updateMenuApi = baseUrl + "api/menu/edit";
 
 //trash list api
 export const trashCategories = baseUrl + "api/trashCategories";
