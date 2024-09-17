@@ -109,7 +109,7 @@ function App() {
           element={<PrivateRoute element={<AddMenu />} />}
         />
         <Route
-          path="/edit-menu:id"
+          path="/edit-menu/:id"
           element={<PrivateRoute element={<AddMenu />} />}
         />
       </Routes>
