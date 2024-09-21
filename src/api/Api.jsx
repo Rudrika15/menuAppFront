@@ -5,6 +5,7 @@ export const baseUrl = "https://menuapp.flipcodesolutions.com/";
 export const login = baseUrl + "api/login";
 export const categoryList = baseUrl + "api/categories";
 export const categoryImage = baseUrl + "categoryPhoto/";
+export const menuPhoto = baseUrl + "menuPhoto/";
 export const getTableList = baseUrl + "api/table";
 export const getTableListById = baseUrl + "api/table/byId";
 export const getStaffList = baseUrl + "api/staff";

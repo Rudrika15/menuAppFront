@@ -2,7 +2,12 @@ import React, { useEffect, useState } from "react";
 import RestaurantSidebar from "../../component/RestaurantSidebar";
 import RestaurantBreadcrumbs from "../../component/RestaurantBreadcrumbs";
 import axios from "axios";
-import { getMenuList, categoryImage, deleteMenuList } from "../../../api/Api";
+import {
+  getMenuList,
+  categoryImage,
+  deleteMenuList,
+  menuPhoto,
+} from "../../../api/Api";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
@@ -113,7 +118,7 @@ const View = () => {
                           <td>{item.price}</td>
                           <td>
                             <img
-                              src={`${categoryImage}/${item.image}`}
+                              src={`${menuPhoto}/${item.image}`}
                               width="50"
                               height="50"
                               alt="Menu Item"

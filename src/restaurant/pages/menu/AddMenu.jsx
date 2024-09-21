@@ -10,6 +10,8 @@ import {
   categoryImage,
   addMenu,
   updateMenuApi,
+  categoryList,
+  menuPhoto,
 } from "../../../api/Api";
 
 const AddMenu = () => {
@@ -18,9 +20,12 @@ const AddMenu = () => {
   const [photo, setPhoto] = useState(null);
   const [loader, setLoader] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
-
+  const [categoryData, setCategoryData] = useState([]);
+  const [categoryId, setCategoryId] = useState(null);
+  const [restaurantId, setRestaurantId] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
   const { id } = useParams();
+  // console.log(data, "test for test");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,6 +35,31 @@ const AddMenu = () => {
     }
   }, [id]);
 
+  const getCategory = async () => {
+    try {
+      const response = await axios.get(categoryList, {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      });
+
+      if (response.data.status === true) {
+        let listOfCategory = response?.data?.data;
+        setCategoryData(listOfCategory);
+        setLoader(false);
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      toast.error("API error");
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getCategory();
+  }, []);
+
   const fetchMenuDetails = async (id) => {
     try {
       setLoader(true);
@@ -37,18 +67,18 @@ const AddMenu = () => {
         headers: { token: localStorage.getItem("token") },
       });
       setLoader(false);
+      console.log(response.data, "test for menu deatuls");
 
       if (response.data.status == true) {
-        console.log(response.data);
-
         const menu = response.data.data;
         setTitle(menu.title);
         setPrice(menu.price);
         setPhoto(menu.photo);
+        setCategoryId(menu?.categoryId);
       }
     } catch (error) {
       setLoader(false);
-      toast.error("Failed to fetch menu details!");
+      toast.error(error.message);
     }
   };
 
@@ -67,10 +97,18 @@ const AddMenu = () => {
       toast.error("Photo is required");
       return;
     }
-
+    if (!categoryId) {
+      toast.error("Category is required");
+      return;
+    }
+    // console.log(restaurantId, "test for restaurant iD");
+    console.log(categoryId.ca, "test for obj");
     const formData = new FormData();
     formData.append("title", title);
     formData.append("price", price);
+    formData.append("categoryId", categoryId);
+    formData.append("restaurantId", restaurantId);
+
     if (photo) {
       formData.append("photo", photo);
     }
@@ -79,12 +117,13 @@ const AddMenu = () => {
       setLoader(true);
 
       if (isEditMode) {
-        const response = await axios.put(`${updateMenuApi}/${id}`, formData, {
+        const response = await axios.post(`${updateMenuApi}/${id}`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
             token: localStorage.getItem("token"),
           },
         });
+        console.log(response, "respone of edit page");
         setLoader(false);
         if (response.data.status === true) {
           toast.success(response.data.message);
@@ -164,6 +203,33 @@ const AddMenu = () => {
                       </div>
                       <div className="col-md-12">
                         <div className="form-floating">
+                          <select
+                            className="form-select"
+                            id="floatingCategory"
+                            value={categoryId || ""}
+                            onChange={(e) => setCategoryId(e.target.value)}
+                          >
+                            <option disabled value="">
+                              Select Category
+                            </option>
+                            {categoryData?.map((category) => {
+                              console.log(category, "test");
+                              let obj = {
+                                restaurantId: category.restaurantId,
+                                categoryId: category.categoryId,
+                              };
+                              return (
+                                <option key={category.id} value={obj}>
+                                  {category.title}
+                                </option>
+                              );
+                            })}
+                          </select>
+                          <label htmlFor="floatingStaffType">Category</label>
+                        </div>
+                      </div>
+                      <div className="col-md-12">
+                        <div className="form-floating">
                           <input
                             type="file"
                             className="form-control"
@@ -183,7 +249,7 @@ const AddMenu = () => {
                       {(previewImage || (isEditMode && photo)) && (
                         <div className="mt-3">
                           <img
-                            src={previewImage || `${categoryImage}/${photo}`}
+                            src={previewImage || `${menuPhoto}/${photo}`}
                             alt="Category Preview"
                             style={{ width: "150px", height: "150px" }}
                           />
