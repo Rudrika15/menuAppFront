@@ -118,7 +118,7 @@ const View = () => {
                           <td>{item.price}</td>
                           <td>
                             <img
-                              src={`${menuPhoto}/${item.image}`}
+                              src={`${menuPhoto}/${item?.photo}`}
                               width="50"
                               height="50"
                               alt="Menu Item"

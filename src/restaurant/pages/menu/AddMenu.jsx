@@ -22,10 +22,9 @@ const AddMenu = () => {
   const [previewImage, setPreviewImage] = useState("");
   const [categoryData, setCategoryData] = useState([]);
   const [categoryId, setCategoryId] = useState(null);
-  const [restaurantId, setRestaurantId] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
   const { id } = useParams();
-  // console.log(data, "test for test");
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -67,7 +66,6 @@ const AddMenu = () => {
         headers: { token: localStorage.getItem("token") },
       });
       setLoader(false);
-      console.log(response.data, "test for menu deatuls");
 
       if (response.data.status == true) {
         const menu = response.data.data;
@@ -102,14 +100,12 @@ const AddMenu = () => {
       return;
     }
     // console.log(restaurantId, "test for restaurant iD");
-    console.log(categoryId.ca, "test for obj");
     const formData = new FormData();
     formData.append("title", title);
     formData.append("price", price);
     formData.append("categoryId", categoryId);
-    formData.append("restaurantId", restaurantId);
 
-    if (photo) {
+    if (photo instanceof File) {
       formData.append("photo", photo);
     }
 
@@ -123,7 +119,6 @@ const AddMenu = () => {
             token: localStorage.getItem("token"),
           },
         });
-        console.log(response, "respone of edit page");
         setLoader(false);
         if (response.data.status === true) {
           toast.success(response.data.message);
@@ -213,13 +208,9 @@ const AddMenu = () => {
                               Select Category
                             </option>
                             {categoryData?.map((category) => {
-                              console.log(category, "test");
-                              let obj = {
-                                restaurantId: category.restaurantId,
-                                categoryId: category.categoryId,
-                              };
+                              // console.log(category, "Data");
                               return (
-                                <option key={category.id} value={obj}>
+                                <option key={category.id} value={category.id}>
                                   {category.title}
                                 </option>
                               );
