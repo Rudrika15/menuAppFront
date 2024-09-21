@@ -37,12 +37,14 @@ export const updateMenuApi = baseUrl + "api/menu/edit";
 export const trashCategories = baseUrl + "api/trashCategories";
 export const trashStaff = baseUrl + "api/trashStaff";
 export const trashTable = baseUrl + "api/trashTable";
+export const trashMenu = baseUrl + "api/trashMenu";
 
 //restore api
 
 export const restoreCategories = baseUrl + "api/category/restore/";
 export const restoreTable = baseUrl + "api/table/restore/";
 export const restoreStaff = baseUrl + "api/staff/restore/";
+export const restoreMenu = baseUrl + "api/menu/restore/";
 
 // harddelete
 export const hardDeleteCategories = baseUrl + "api/category/delete/";

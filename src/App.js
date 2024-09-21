@@ -21,6 +21,7 @@ import TrashTable from "./restaurant/pages/table/TrashTable";
 import View from "./restaurant/pages/menu/View";
 import { useEffect } from "react";
 import AddMenu from "./restaurant/pages/menu/AddMenu";
+import TrashMenu from "./restaurant/pages/menu/TrashMenu";
 
 function App() {
   const isAuthenticated = () => {
@@ -107,6 +108,10 @@ function App() {
         <Route
           path="/add-menu"
           element={<PrivateRoute element={<AddMenu />} />}
+        />
+        <Route
+          path="/trash-menu"
+          element={<PrivateRoute element={<TrashMenu />} />}
         />
         <Route
           path="/edit-menu/:id"
