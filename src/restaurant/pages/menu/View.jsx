@@ -60,7 +60,7 @@ const View = () => {
           });
 
           if (response.data.status === true) {
-            toast.success(response.status.message);
+            toast.success("sucesss");
             getMenu();
           } else {
             toast.error(response.data.message);
@@ -112,6 +112,13 @@ const View = () => {
                       </tr>
                     </thead>
                     <tbody>
+                      {menu.length === 0 && (
+                        <tr>
+                          <td colSpan="4" className="text-center">
+                            No Data Found
+                          </td>
+                        </tr>
+                      )}
                       {menu.map((item, index) => (
                         <tr key={index}>
                           <td>{item.title}</td>
