@@ -60,7 +60,7 @@ const View = () => {
           });
 
           if (response.data.status === true) {
-            toast.success("sucesss");
+            toast.success(response.data.message);
             getMenu();
           } else {
             toast.error(response.data.message);
