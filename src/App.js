@@ -22,6 +22,7 @@ import View from "./restaurant/pages/menu/View";
 import { useEffect } from "react";
 import AddMenu from "./restaurant/pages/menu/AddMenu";
 import TrashMenu from "./restaurant/pages/menu/TrashMenu";
+import PrintBillMenu from "./restaurant/pages/bills/PrintBillMenu";
 
 function App() {
   const isAuthenticated = () => {
@@ -116,6 +117,10 @@ function App() {
         <Route
           path="/edit-menu/:id"
           element={<PrivateRoute element={<AddMenu />} />}
+        />
+        <Route
+          path="/bill"
+          element={<PrivateRoute element={<PrintBillMenu />} />}
         />
       </Routes>
       <Footer />

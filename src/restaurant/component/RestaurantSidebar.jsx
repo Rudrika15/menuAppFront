@@ -135,6 +135,23 @@ const RestaurantSidebar = () => {
               </li>
             </ul>
           </li>
+
+          <li className="nav-item">
+            {/* <a
+              className="nav-link collapsed"
+              data-bs-target="#category"
+              data-bs-toggle="collapse"
+              href="#"
+              
+            > */}
+            <Link className="nav-link collapsed" to="/bill">
+              <i className="bi bi-journal-text"></i>
+              <span>Bills</span>
+            </Link>
+
+            {/* <i className="bi bi-chevron-down ms-auto"></i> */}
+            {/* </a> */}
+          </li>
         </ul>
       </aside>
     </>
