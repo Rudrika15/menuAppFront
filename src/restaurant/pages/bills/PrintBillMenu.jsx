@@ -1,35 +1,52 @@
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 import RestaurantSidebar from "../../component/RestaurantSidebar";
-import { useEffect, useState } from "react";
 import RestaurantBreadcrumbs from "../../component/RestaurantBreadcrumbs";
+import { getBillvalue } from "../../../api/Api";
+import axios from "axios";
 
 const PrintBillMenu = () => {
   const [billData, setBillData] = useState([]);
   const [loader, setLoader] = useState(false);
+  const printRefs = useRef([]); // Create an array of refs for each bill
 
   // Fetch bill data from API
   useEffect(() => {
     const fetchBillData = async () => {
+      setLoader(true); // Show loader while fetching
       try {
-        // const response = await axios.get("YOUR_API_ENDPOINT");
-        // setBillData(response.data); // Assuming the response has bill items data
+        const response = await axios.get(getBillvalue, {
+          headers: {
+            // token: localStorage.getItem("token"),
+
+            token:
+              "5d7915a377634567c446db126c9caf645211187c8ed909180835db468227b9c9",
+          },
+        });
+
+        if (response.data.status == true) {
+          if (response.data.data) {
+            setBillData(response?.data?.data);
+          }
+        }
       } catch (error) {
         console.error("Error fetching bill data:", error);
+      } finally {
+        setLoader(false); // Hide loader after fetching
       }
     };
 
     fetchBillData();
   }, []);
 
-  const calculateTotal = () => {
-    return billData.reduce(
-      (total, item) => total + item.quantity * item.price,
-      0
-    );
-  };
-
-  const handlePrint = () => {
-    window.print();
+  const handlePrint = (index) => {
+    const printContent = printRefs.current[index];
+    if (printContent) {
+      const originalContent = document.body.innerHTML;
+      document.body.innerHTML = printContent.innerHTML; // Temporarily replace page content
+      window.print();
+      document.body.innerHTML = originalContent; // Restore original page content
+      window.location.reload(); // Reload page to reattach event listeners and restore state
+    }
   };
 
   return (
@@ -39,7 +56,6 @@ const PrintBillMenu = () => {
         <RestaurantBreadcrumbs title="Print Bill" linkTitle="Back" link="#" />
 
         {/* Main Content */}
-
         {loader ? (
           <div className="d-flex justify-content-center">
             <div className="spinner-border text-primary" role="status">
@@ -49,62 +65,58 @@ const PrintBillMenu = () => {
         ) : (
           <div className="col-md-10">
             <div className="row">
-              <div className="col-md-4 offset-md-2">
-                <h2>Print Bill</h2>
-                <div className="border p-3" id="bill-print">
-                  <h3>Restaurant Bill</h3>
-                  <table className="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th>Item</th>
-                        <th>Qty</th>
-                        <th>Price</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {billData.map((item, index) => (
-                        <tr key={index}>
-                          <td>{item.itemName}</td>
-                          <td>{item.quantity}</td>
-                          <td>₹{item.price}</td>
+              {billData.map((bill, index) => (
+                <div key={bill.id} className="col-md-4 offset-md-2 mb-4">
+                  <div
+                    className="border p-3"
+                    ref={(el) => (printRefs.current[index] = el)}
+                  >
+                    <h3>Restaurant Bill</h3>
+                    <h4>Table Number: {bill.tableNumber}</h4>
+                    <h5>Customer Name: {bill.get_orders[0]?.name || "N/A"}</h5>
+                    <h6>
+                      Contact Number:{" "}
+                      {bill.get_orders[0]?.contactNumber || "N/A"}
+                    </h6>
+                    <table className="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Item</th>
+                          <th>Quantity</th>
+                          <th>Price</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                  <h4>Total: ₹{calculateTotal()}</h4>
+                      </thead>
+                      <tbody>
+                        {bill.get_orders.flatMap((order) =>
+                          order.order_details.map((item) => (
+                            <tr key={item.id}>
+                              <td>{item.menu.title}</td>
+                              <td>{item.qty}</td>
+                              <td>₹{item.menu.price}</td>
+                            </tr>
+                          ))
+                        )}
+                      </tbody>
+                    </table>
+                    <h4>
+                      Total: ₹
+                      {bill.get_orders
+                        .flatMap((order) =>
+                          order.order_details.map(
+                            (item) => item.qty * item.menu.price
+                          )
+                        )
+                        .reduce((total, price) => total + price, 0)}
+                    </h4>
+                  </div>
+                  <button
+                    className="btn btn-primary mt-3"
+                    onClick={() => handlePrint(index)}
+                  >
+                    Print Bill #{bill.id}
+                  </button>
                 </div>
-                <button className="btn btn-primary mt-3" onClick={handlePrint}>
-                  Print Bill
-                </button>
-              </div>
-              <div className="col-md-4 offset-md-2">
-                <h2>Print Bill</h2>
-                <div className="border p-3" id="bill-print">
-                  <h3>Restaurant Bill</h3>
-                  <table className="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th>Item</th>
-                        <th>Qty</th>
-                        <th>Price</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {billData.map((item, index) => (
-                        <tr key={index}>
-                          <td>{item.itemName}</td>
-                          <td>{item.quantity}</td>
-                          <td>₹{item.price}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                  <h4>Total: ₹{calculateTotal()}</h4>
-                </div>
-                <button className="btn btn-primary mt-3" onClick={handlePrint}>
-                  Print Bill
-                </button>
-              </div>
+              ))}
             </div>
           </div>
         )}

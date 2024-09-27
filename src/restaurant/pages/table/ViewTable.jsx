@@ -21,6 +21,8 @@ const ViewTable = () => {
         },
       });
       setTables(response.data.data);
+      console.log(tables, "test for tabel");
+
       setLoader(false);
     } catch (error) {
       toast.error("API call failed!");

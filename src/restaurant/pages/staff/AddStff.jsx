@@ -204,6 +204,7 @@ const AddStff = () => {
                             <option value="manager">Manager</option>
                             <option value="waiter">Waiter</option>
                             <option value="chef">Chef</option>
+                            <option value="Receptionist">Receptionist</option>
                           </select>
                           <label htmlFor="floatingStaffType">Staff Type</label>
                         </div>

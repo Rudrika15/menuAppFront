@@ -48,3 +48,7 @@ export const restoreMenu = baseUrl + "api/menu/restore/";
 
 // harddelete
 export const hardDeleteCategories = baseUrl + "api/category/delete/";
+
+//printBills api
+
+export const getBillvalue = baseUrl + "api/billCreate";
