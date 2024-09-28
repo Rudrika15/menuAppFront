@@ -53,17 +53,18 @@ const ViewCategory = () => {
         },
       });
 
-      if (response.data) {
-        if (response.data.status === true) {
-          setCategoryData(response?.data?.data);
-          setLoader(false);
-        } else {
-          toast.error(response.data.message);
+      if (response.data.status === true) {
+        if (response.data.data) {
+          setCategoryData(response.data.data);
         }
+      } else {
+        toast.error(response.data.message);
       }
     } catch (error) {
       toast.error("API error");
       console.log(error);
+    } finally {
+      setLoader(false);
     }
   };
 

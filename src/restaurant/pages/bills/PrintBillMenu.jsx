@@ -3,23 +3,23 @@ import RestaurantSidebar from "../../component/RestaurantSidebar";
 import RestaurantBreadcrumbs from "../../component/RestaurantBreadcrumbs";
 import { getBillvalue } from "../../../api/Api";
 import axios from "axios";
+import "../bills/PrintBill.css";
 
 const PrintBillMenu = () => {
   const [billData, setBillData] = useState([]);
   const [loader, setLoader] = useState(false);
-  const printRefs = useRef([]); // Create an array of refs for each bill
+  const printRefs = useRef([]);
 
-  // Fetch bill data from API
   useEffect(() => {
     const fetchBillData = async () => {
-      setLoader(true); // Show loader while fetching
+      setLoader(true);
+      console.log("token log in", localStorage.getItem("token"));
       try {
         const response = await axios.get(getBillvalue, {
           headers: {
-            // token: localStorage.getItem("token"),
-
-            token:
-              "5d7915a377634567c446db126c9caf645211187c8ed909180835db468227b9c9",
+            token: localStorage.getItem("token"),
+            // token:
+            //   "0e4aace67f447870c60b1351bc63e012c6a34004878cc89e148b5eca986405ee",
           },
         });
 
@@ -31,7 +31,7 @@ const PrintBillMenu = () => {
       } catch (error) {
         console.error("Error fetching bill data:", error);
       } finally {
-        setLoader(false); // Hide loader after fetching
+        setLoader(false);
       }
     };
 
@@ -66,7 +66,7 @@ const PrintBillMenu = () => {
           <div className="col-md-10">
             <div className="row">
               {billData.map((bill, index) => (
-                <div key={bill.id} className="col-md-4 offset-md-2 mb-4">
+                <div key={bill.id} className="col-md-4 offset-md-2 mb-4 ">
                   <div
                     className="border p-3"
                     ref={(el) => (printRefs.current[index] = el)}
@@ -78,7 +78,12 @@ const PrintBillMenu = () => {
                       Contact Number:{" "}
                       {bill.get_orders[0]?.contactNumber || "N/A"}
                     </h6>
-                    <table className="table table-bordered">
+                    <table
+                      className="table table-bordered 
+                      table-print
+                      "
+                      style={{ display: "none" }}
+                    >
                       <thead>
                         <tr>
                           <th>Item</th>
@@ -108,13 +113,13 @@ const PrintBillMenu = () => {
                         )
                         .reduce((total, price) => total + price, 0)}
                     </h4>
+                    <button
+                      className="btn btn-primary mt-3"
+                      onClick={() => handlePrint(index)}
+                    >
+                      Print Bill #{bill.id}
+                    </button>
                   </div>
-                  <button
-                    className="btn btn-primary mt-3"
-                    onClick={() => handlePrint(index)}
-                  >
-                    Print Bill #{bill.id}
-                  </button>
                 </div>
               ))}
             </div>

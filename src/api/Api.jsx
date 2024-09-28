@@ -3,6 +3,7 @@ export const baseUrl = "https://menuapp.flipcodesolutions.com/";
 
 // view api
 export const login = baseUrl + "api/login";
+// export const login = baseUrl + "api/staffLogin";
 export const categoryList = baseUrl + "api/categories";
 export const categoryImage = baseUrl + "categoryPhoto/";
 export const menuPhoto = baseUrl + "menuPhoto/";

@@ -19,7 +19,12 @@ const ViewStaff = () => {
           token: localStorage.getItem("token"),
         },
       });
-      setStaff(response.data.data);
+      console.log(response, "test response");
+      if (response.data.status == true) {
+        if (response.data.data) {
+          setStaff(response.data.data);
+        }
+      }
     } catch (error) {
       toast.error("API call failed!");
     } finally {

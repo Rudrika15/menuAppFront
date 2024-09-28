@@ -1,0 +1,7 @@
+@media print{
+    .table-print{
+        display: block !important;
+        width: 100% !important;
+    }
+
+}

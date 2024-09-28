@@ -20,12 +20,16 @@ const ViewTable = () => {
           token: localStorage.getItem("token"),
         },
       });
-      setTables(response.data.data);
-      console.log(tables, "test for tabel");
 
-      setLoader(false);
+      if (response.data.status == true) {
+        if (response.data.data) {
+          setTables(response.data.data);
+        }
+      }
     } catch (error) {
       toast.error("API call failed!");
+    } finally {
+      setLoader(false);
     }
   };
 
