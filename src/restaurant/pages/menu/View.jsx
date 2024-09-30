@@ -58,6 +58,7 @@ const View = () => {
               token: localStorage.getItem("token"),
             },
           });
+          console.log("test");
 
           if (response.data.status === true) {
             toast.success(response.data.message);
