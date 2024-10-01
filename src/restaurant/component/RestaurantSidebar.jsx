@@ -3,17 +3,21 @@ import { Link } from "react-router-dom";
 import RestaurantTopbar from "./RestaurantTopbar";
 
 const RestaurantSidebar = () => {
+  const name = localStorage.getItem("restName") || "default"; // Default value if not set
+  const role = localStorage.getItem("role");
+
   return (
     <>
       <RestaurantTopbar />
       <aside id="sidebar" className="sidebar">
         <ul className="sidebar-nav" id="sidebar-nav">
           <li className="nav-item">
-            <Link className="nav-link collapsed" to="/">
+            <Link className="nav-link collapsed" to={`/${name}/`}>
               <i className="bi bi-grid"></i>
               <span>Dashboard</span>
             </Link>
           </li>
+
           <li className="nav-item">
             <a
               className="nav-link collapsed"
@@ -31,20 +35,20 @@ const RestaurantSidebar = () => {
               data-bs-parent="#sidebar-nav"
             >
               <li>
-                <Link to="/view-staff">
+                <Link to={`/${name}/view-staff`}>
                   <i className="bi bi-circle"></i>
                   <span>View staff</span>
                 </Link>
               </li>
-
               <li>
-                <Link to="/trash-staff">
+                <Link to={`/${name}/trash-staff`}>
                   <i className="bi bi-circle"></i>
                   <span>Trash staff</span>
                 </Link>
               </li>
             </ul>
           </li>
+
           <li className="nav-item">
             <a
               className="nav-link collapsed"
@@ -62,19 +66,20 @@ const RestaurantSidebar = () => {
               data-bs-parent="#sidebar-nav"
             >
               <li>
-                <Link to="/view-category">
+                <Link to={`/${name}/view-category`}>
                   <i className="bi bi-circle"></i>
                   <span>View category</span>
                 </Link>
               </li>
               <li>
-                <Link to="/trash-category">
+                <Link to={`/${name}/trash-category`}>
                   <i className="bi bi-circle"></i>
                   <span>Trash category</span>
                 </Link>
               </li>
             </ul>
           </li>
+
           <li className="nav-item">
             <a
               className="nav-link collapsed"
@@ -92,19 +97,20 @@ const RestaurantSidebar = () => {
               data-bs-parent="#sidebar-nav"
             >
               <li>
-                <Link to="/view-table">
+                <Link to={`/${name}/view-table`}>
                   <i className="bi bi-circle"></i>
                   <span>View table</span>
                 </Link>
               </li>
               <li>
-                <Link to="/trash-table">
+                <Link to={`/${name}/trash-table`}>
                   <i className="bi bi-circle"></i>
                   <span>Trash table</span>
                 </Link>
               </li>
             </ul>
           </li>
+
           <li className="nav-item">
             <a
               className="nav-link collapsed"
@@ -122,13 +128,13 @@ const RestaurantSidebar = () => {
               data-bs-parent="#sidebar-nav"
             >
               <li>
-                <Link to="/view-menu">
+                <Link to={`/${name}/view-menu`}>
                   <i className="bi bi-circle"></i>
                   <span>View Menu</span>
                 </Link>
               </li>
               <li>
-                <Link to="/trash-menu">
+                <Link to={`/${name}/trash-menu`}>
                   <i className="bi bi-circle"></i>
                   <span>Trash Menu</span>
                 </Link>
@@ -137,20 +143,14 @@ const RestaurantSidebar = () => {
           </li>
 
           <li className="nav-item">
-            {/* <a
-              className="nav-link collapsed"
-              data-bs-target="#category"
-              data-bs-toggle="collapse"
-              href="#"
-              
-            > */}
-            <Link className="nav-link collapsed" to="/bill">
-              <i className="bi bi-journal-text"></i>
-              <span>Bills</span>
-            </Link>
-
-            {/* <i className="bi bi-chevron-down ms-auto"></i> */}
-            {/* </a> */}
+            {(role === "Cashier" ||
+              role === "Manager" ||
+              role === "Admin") ? (
+              <Link className="nav-link collapsed" to={`/${name}/bills`}>
+                <i className="bi bi-journal-text"></i>
+                <span>Bills</span>
+              </Link>
+            ) : null}
           </li>
         </ul>
       </aside>

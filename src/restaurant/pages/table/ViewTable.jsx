@@ -10,9 +10,9 @@ import Swal from "sweetalert2"; // Import SweetAlert2
 
 const ViewTable = () => {
   const [tables, setTables] = useState([]);
-  const [qrCodeUrl, setQrCodeUrl] = useState("");
-  const [showQrCode, setShowQrCode] = useState(false);
   const [loader, setLoader] = useState(true);
+  const restaurantName = localStorage.getItem("restName") || "default"; // Default value if not set
+
   const getTables = async () => {
     try {
       const response = await axios.get(getTableList, {
@@ -21,9 +21,13 @@ const ViewTable = () => {
         },
       });
 
-      if (response.data.status == true) {
+      if (response.data.status === true) {
         if (response.data.data) {
-          setTables(response.data.data);
+          const tableDataWithQr = response.data.data.map((table) => {
+            const qrCodeUrl = `${baseUrl}${localStorage.getItem("id")}/${table.id}`;
+            return { ...table, qrCodeUrl };
+          });
+          setTables(tableDataWithQr);
         }
       }
     } catch (error) {
@@ -31,15 +35,6 @@ const ViewTable = () => {
     } finally {
       setLoader(false);
     }
-  };
-
-  const generateQrCode = (tableId) => {
-    const baseUrl1 = baseUrl;
-    const tableNo = tableId;
-    const restId = localStorage.getItem("id");
-    const qrCodeUrl = `${baseUrl1}${restId}/${tableNo}`;
-    setQrCodeUrl(qrCodeUrl);
-    setShowQrCode(true);
   };
 
   const deleteTable = async (id) => {
@@ -92,10 +87,7 @@ const ViewTable = () => {
                 <div className="card-body pt-5">
                   {loader ? (
                     <div className="d-flex justify-content-center">
-                      <div
-                        className="spinner-border text-primary"
-                        role="status"
-                      >
+                      <div className="spinner-border text-primary" role="status">
                         <span className="visually-hidden">Loading...</span>
                       </div>
                     </div>
@@ -106,6 +98,7 @@ const ViewTable = () => {
                           <th>Table Name</th>
                           <th>Capacity</th>
                           <th>Option</th>
+                          <th>QR Code</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -114,31 +107,24 @@ const ViewTable = () => {
                             <td>{table.tableNumber}</td>
                             <td>{table.capacity}</td>
                             <td>
-                              <Link to={`/edit-table/${table.id}`}>
+                              <Link to={`/${restaurantName}/edit-table/${table.id}`}>
                                 <i className="bi bi-pen bg-primary text-white fs-5 p-2 me-2"></i>
                               </Link>
                               <Link onClick={() => deleteTable(table.id)}>
                                 <i className="bi bi-trash bg-danger text-white fs-5 p-2 me-2"></i>
                               </Link>
-                              {/* <button
-                                                                onClick={() => generateQrCode(table.id)}
-                                                                className="btn btn-link p-0 m-0 text-decoration-none"
-                                                            >
-                                                                Generate QR
-                                                            </button> */}
+                            </td>
+                            <td>
+                              <QRCode
+                                value={table.qrCodeUrl}
+                                size={64} // You can adjust the size as needed
+                              />
                             </td>
                           </tr>
                         ))}
                       </tbody>
                     </table>
                   )}
-
-                  {/* {showQrCode && (
-                                        <div className="mt-4">
-                                            <h5>QR Code:</h5>
-                                            <QRCode value={qrCodeUrl} />
-                                        </div>
-                                    )} */}
                 </div>
               </div>
             </div>

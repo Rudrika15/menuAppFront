@@ -1,14 +1,15 @@
 import React from 'react'
 
 const Footer = () => {
+    const currentYear = new Date().getFullYear();
     return (
         <>
             <footer id="footer" className="footer">
                 <div className="copyright">
-                    &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+                    &copy; {currentYear} <strong><span>Menu app</span></strong>. All Rights Reserved
                 </div>
                 <div className="credits">
-                    Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                    Developed by <a href="https://flipcodesolutions.com/" target='_blank'><strong>Flipcode Solutions</strong></a>
                 </div>
             </footer>
 

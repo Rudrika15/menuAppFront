@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 const View = () => {
   const [menu, setMenu] = useState([]);
   const [search, setSearch] = useState("");
+  const restaurantName = localStorage.getItem("restName") || "default"; // Default value if not set
 
   const getMenu = async () => {
     try {
@@ -133,7 +134,7 @@ const View = () => {
                             />
                           </td>
                           <td>
-                            <Link to={`/edit-menu/${item.id}`}>
+                            <Link to={`/${restaurantName}/edit-menu/${item.id}`}>
                               <i className="btn btn-primary bi bi-pencil text-white fs-5 p-2 me-2"></i>
                             </Link>
                             <i

@@ -7,6 +7,7 @@ import { addStff, getSingleStaffData, updateStaffApi } from "../../../api/Api";
 import { useParams, useNavigate } from "react-router-dom";
 
 const AddStff = () => {
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

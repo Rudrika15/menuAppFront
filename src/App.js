@@ -25,13 +25,16 @@ import TrashMenu from "./restaurant/pages/menu/TrashMenu";
 import PrintBillMenu from "./restaurant/pages/bills/PrintBillMenu";
 
 function App() {
+  const restaurantName = localStorage.getItem("restName") || "default";
+
   const isAuthenticated = () => {
     return localStorage.getItem("token") !== null;
   };
 
-  const PrivateRoute = ({ element: Component, ...rest }) => {
-    return isAuthenticated() ? Component : <Navigate to="/" />;
+  const PrivateRoute = ({ element }) => {
+    return isAuthenticated() ? element : <Navigate to="/" replace />;
   };
+
   useEffect(() => {
     document.body.classList.remove("toggle-sidebar");
   }, []);
@@ -40,86 +43,84 @@ function App() {
     <Router>
       <ToastContainer />
       <Routes>
-        {/* Public Route */}
+        {/* Routes */}
         <Route path="/" element={<Login />} />
-        {/* Protected Routes */}
 
-        {/* staff routes */}
-
+        {/* Staff Routes */}
         <Route
-          path="/add-new-staff"
+          path={`/${restaurantName}/add-new-staff`}
           element={<PrivateRoute element={<AddStaff />} />}
         />
         <Route
-          path="/staff/:id"
+          path={`/${restaurantName}/staff/:id`}
           element={<PrivateRoute element={<AddStaff />} />}
         />
         <Route
-          path="/view-staff"
+          path={`/${restaurantName}/view-staff`}
           element={<PrivateRoute element={<ViewStaff />} />}
         />
         <Route
-          path="/trash-staff"
+          path={`/${restaurantName}/trash-staff`}
           element={<PrivateRoute element={<TrashStaff />} />}
         />
 
-        {/* categories */}
-
+        {/* Categories */}
         <Route
-          path="/add-new-category"
+          path={`/${restaurantName}/add-new-category`}
           element={<PrivateRoute element={<AddCategory />} />}
         />
         <Route
-          path="/view-category"
+          path={`/${restaurantName}/view-category`}
           element={<PrivateRoute element={<ViewCategory />} />}
         />
         <Route
-          path="/edit-category/:id"
+          path={`/${restaurantName}/edit-category/:id`}
           element={<PrivateRoute element={<AddCategory />} />}
         />
-
         <Route
-          path="/trash-category"
+          path={`/${restaurantName}/trash-category`}
           element={<PrivateRoute element={<TrashCategory />} />}
         />
 
-        {/* table routes */}
-
+        {/* Table Routes */}
         <Route
-          path="/add-new-table"
+          path={`/${restaurantName}/add-new-table`}
           element={<PrivateRoute element={<AddTable />} />}
         />
         <Route
-          path="/view-table"
+          path={`/${restaurantName}/view-table`}
           element={<PrivateRoute element={<ViewTable />} />}
         />
         <Route
-          path="/edit-table/:tableId"
+          path={`/${restaurantName}/edit-table/:tableId`}
           element={<PrivateRoute element={<AddTable />} />}
         />
-
         <Route
-          path="/Trash-table"
+          path={`/${restaurantName}/trash-table`}
           element={<PrivateRoute element={<TrashTable />} />}
         />
+
+        {/* Menu Routes */}
         <Route
-          path="/view-menu"
+          path={`/${restaurantName}/view-menu`}
           element={<PrivateRoute element={<View />} />}
         />
         <Route
-          path="/add-menu"
+          path={`/${restaurantName}/add-menu`}
           element={<PrivateRoute element={<AddMenu />} />}
         />
         <Route
-          path="/trash-menu"
+          path={`/${restaurantName}/trash-menu`}
           element={<PrivateRoute element={<TrashMenu />} />}
         />
         <Route
-          path="/edit-menu/:id"
+          path={`/${restaurantName}/edit-menu/:id`}
           element={<PrivateRoute element={<AddMenu />} />}
         />
+
+        {/* Bill Routes */}
         <Route
-          path="/bill"
+          path={`/${restaurantName}/bill`}
           element={<PrivateRoute element={<PrintBillMenu />} />}
         />
       </Routes>

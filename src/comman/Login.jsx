@@ -53,12 +53,18 @@ const Login = () => {
 
       if (data.status === true) {
         const token = data.token;
+        const nameWithHyphen = data.data.restaurant_name
+        //find space and replace with -
+        const restName = nameWithHyphen.replace(/\s+/g, "-");
+        localStorage.setItem("name", nameWithHyphen);
         localStorage.setItem("token", token);
+        localStorage.setItem("role", data.data.staffType);
+        localStorage.setItem("restName", restName);
         console.log(token, "start log in token");
         localStorage.setItem("name", data.data.name);
         localStorage.setItem("id", data.data.id);
         toast.success("Login successful");
-        navigate("/add-new-staff");
+        navigate(`/${restName}/add-new-staff`);
       } else {
         toast.error(data.message);
       }

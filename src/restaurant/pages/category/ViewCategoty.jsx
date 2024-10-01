@@ -13,6 +13,7 @@ import Swal from "sweetalert2";
 const ViewCategory = () => {
   const [categoryData, setCategoryData] = useState([]);
   const [loader, setLoader] = useState(true);
+  const restaurantName = localStorage.getItem("restName") || "default"; // Default value if not set
 
   const deleteCategory = async (id) => {
     Swal.fire({
@@ -123,7 +124,7 @@ const ViewCategory = () => {
                                 />
                               </td>
                               <td>
-                                <Link to={`/edit-category/${category.id}`}>
+                                <Link to={`/${restaurantName}/edit-category/${category.id}`}>
                                   <i className="bi bi-pen bg-primary text-white fs-5 p-2 me-2"></i>
                                 </Link>
                                 <Link

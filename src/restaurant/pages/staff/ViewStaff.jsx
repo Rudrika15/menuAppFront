@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 const ViewStaff = () => {
   const [staff, setStaff] = useState([]);
   const [loading, setLoading] = useState(true); // Add loading state
+  const restaurantName = localStorage.getItem("restName") || "default"; // Default value if not set
 
   const getStaff = async () => {
     setLoading(true); // Set loading to true before fetching data
@@ -110,7 +111,7 @@ const ViewStaff = () => {
                             <td>{staff.contactNumber}</td>
                             <td>{staff.staffType}</td>
                             <td>
-                              <Link to={`/staff/${staff.id}`} className="">
+                              <Link to={`/${restaurantName}/staff/${staff.id}`} className="">
                                 <i className="bi bi-pencil-square bg-primary text-white fs-5 p-2 me-2"></i>
                               </Link>
                               <i
